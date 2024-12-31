@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:newsapp_api/description.dart';
+
+
 class NewsScreen extends StatefulWidget {
   @override
   _NewsScreenState createState() => _NewsScreenState();
@@ -90,13 +93,24 @@ class _NewsScreenState extends State<NewsScreen> with WidgetsBindingObserver {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewsDetailScreen(
+                            title: title,
+                            description: description,
+                            imageUrl: imageUrl,
+                          ),
+                        ),
+                      );
+                    },
                     child: Column(
                       children: [
                         imageUrl.isNotEmpty
                             ? Image.network(
                                 imageUrl,
-                                height: 200,
+                                height: 130,
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                                 loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
@@ -115,7 +129,7 @@ class _NewsScreenState extends State<NewsScreen> with WidgetsBindingObserver {
                                 },
                                 errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                                   return Container(
-                                    height: 200,
+                                    height: 130,
                                     color: Colors.grey[300],
                                     child: Center(
                                       child: Text('Image Load Error', textAlign: TextAlign.center),
@@ -124,7 +138,7 @@ class _NewsScreenState extends State<NewsScreen> with WidgetsBindingObserver {
                                 },
                               )
                             : Container(
-                                height: 200,
+                                height: 130,
                                 width: double.infinity,
                                 color: Colors.grey[300],
                                 child: Center(
